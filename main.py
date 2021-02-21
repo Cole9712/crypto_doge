@@ -2,7 +2,6 @@ import discord
 import os
 from discord.ext import commands
 import price_util as pu
-import cairosvg as cairosvg
 
 client = discord.Client()
 bot = commands.Bot(command_prefix='-doge')
@@ -15,7 +14,7 @@ async def on_ready():
 
 @client.event
 async def on_message(msg):
-    
+
     if msg.author == client.user:
         return
 
@@ -28,16 +27,17 @@ async def on_message(msg):
             [price, timestamp, logo_url] = pu.currentPrice(msgArr[1])
             curl = pu.getUrl(msgArr[1])
             embed = discord.Embed(title=msgArr[1], url=curl,
-                                  description="price: "+str(round(float(price),3))+" (USD)\nTimestamp: "+timestamp, color=discord.Color.blue())
-            # pngContent = cairosvg.svg2png(url=logo_url,write_to='/imgs/png_output.png')
-            # png_file = open("png_output.png", "w")
-            # png_output.name.write(destFile)
-            # embed.set_thumbnail(url='./imgs/png_output.png')
-            
+                                  description="price: "+str(round(float(price), 3))+" (USD)\nTimestamp: "+timestamp, color=discord.Color.blue())
+            # pu.saveImg(logo_url, "svg.svg");
+            # cairosvg.svg2png(url="./svg.svg",write_to='./logo.png')
+            embed.set_thumbnail(
+                url='https://cryptoicons.org/api/white/btc/400')
+            embed.set_footer(text="\U000027A1Go Right for Sparkline\U000027A1")
+
             chanMsg = await channel.send(embed=embed)
             await chanMsg.add_reaction('\U00002B05')
             await chanMsg.add_reaction('\U000027A1')
-            await msg.add_reaction('₿')
+            await msg.add_reaction('\U0001F4B0')
         else:
             await channel.send('GG!')
     await bot.process_commands(msg)
