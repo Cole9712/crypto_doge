@@ -1,6 +1,4 @@
 
-stormhack-env/
-*.png
 *.svg
 
 node_modules/
