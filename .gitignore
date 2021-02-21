@@ -131,3 +131,5 @@ dmypy.json
 /stormhack-env/
 *.png
 *.svg
+
+/node_modules/
