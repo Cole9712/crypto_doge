@@ -84,7 +84,7 @@ async def on_message(msg):
             # print([today, oldday])
             pu.visualize(pu.getSparkline(msgArr[1], oldday, today))
             thirdEmbed = discord.Embed(
-                title="Visual", color=discord.Color.purple())
+                title="Visual Representation", description="Market Price for Past 30 Days", color=discord.Color.purple())
 
         else:
             await channel.send('Please at least enter one crypto currency')
