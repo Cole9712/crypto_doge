@@ -44,7 +44,7 @@ def getUrl( id ):
 		data = res.json()[0]
 		return data['website_url']
 
-print( currentPrice( 'BTC' ) )
+# print( currentPrice( 'BTC' ) )
 
 
 
