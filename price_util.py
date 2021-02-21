@@ -25,7 +25,7 @@ def currentPrice( id ):
 
 		data = response.json()[0]
 
-		return [ data['price'], data['price_timestamp'] ]
+		return [ data['price'], data['price_timestamp'], data['logo_url'] ]
 
 
 
@@ -44,4 +44,9 @@ def getUrl( id ):
 		data = res.json()[0]
 		return data['website_url']
 
-print( getUrl( 'BTC' ) )
+print( currentPrice( 'BTC' ) )
+
+
+
+# input: ticker symbol in string
+# output: 
