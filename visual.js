@@ -12,25 +12,27 @@ function getSparkline( id, s, e )
     let start = "&start=" + s + "T00%3A00%3A00Z";
     let end = "&end=" + e + "T00%3A00%3A00Z";
 
-
 	fetch( reqUrl + key + ids + start + end )
 		.then( res =>
 		{
-			if( res.status !== 200 )
-			{
-				return null;
-		 	}
-			else
-			{
-				res.json();
-			}
+//			if(res.status !== 200 )
+//			{
+//				return null;
+//		 	}
+//			else
+//			{
+//				res.json();
+//			}
+			res.json()
 		} )
-		.then( data => { return( data ) } );
+		.then( data => { console.log(data) } );
 }
-console.log("hi");
-console.log( getSparkline( 'BTC', "2021-02-10", "2021-02-20" ) );
 
 function visual()
 {
-
+	let a = getSparkline( 'BTC', "2021-02-10", "2021-02-20" );
+	return a;
 }
+
+console.log("hi");
+console.log( visual() );
