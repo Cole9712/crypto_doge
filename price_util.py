@@ -3,6 +3,11 @@
 import os
 import requests
 import json
+<<<<<<< HEAD
+import matplotlib.pyplot as plt
+from datetime import datetime
+=======
+>>>>>>> bd5e1934851171313704a508ca7e3ce75263611f
 
 mykey = os.getenv('NOMICS_API_KEY')
 
@@ -46,6 +51,21 @@ def getUrl(id):
 # input: ticker symbol in string
 # output:
 def getSparkline(id, s, e):
+<<<<<<< HEAD
+	reqUrl = "https://api.nomics.com/v1/currencies/sparkline?"
+	key = "key=" + mykey
+	ids = "&ids=" + id
+	start = "&start=" + s + "T00%3A00%3A00Z"
+	end = "&end=" + e + "T00%3A00%3A00Z"
+
+	res = requests.get(reqUrl + key + ids + start + end)
+
+	if(res.status_code != 200):
+		return None
+	else:
+		data = res.json()[0]
+		return [data['timestamps'], data['prices']]
+=======
     reqUrl = "https://api.nomics.com/v1/currencies/sparkline?"
     key = "key=" + mykey
     ids = "&ids=" + id
@@ -59,6 +79,7 @@ def getSparkline(id, s, e):
     else:
         data = res.json()[0]
         return [data['timestamps'], data['prices']]
+>>>>>>> bd5e1934851171313704a508ca7e3ce75263611f
 
 
 # input: image url, image file name
@@ -71,6 +92,25 @@ def saveImg(url, filename):
     f.close()
 
 
+<<<<<<< HEAD
+
+def visualize( data ):
+	for i in range( len( data[0] ) ):
+		data[0][i] = datetime.strptime( data[0][i], '%Y-%m-%dT%H:%M:%SZ' )
+
+	for i in range( len( data[1] ) ):
+		data[1][i] = float( data[1][i] )
+
+	plt.figure( figsize = ( 10, 10 ), dpi = 300 )
+	plt.plot_date( data[0], data[1], linestyle='solid', marker='o' )
+	plt.xlabel( 'Time', fontweight='bold' )
+	plt.ylabel( 'Price', fontweight='bold' )
+	plt.savefig( 'sparkline.png' )
+
+# visualize( getSparkline( 'BTC', "2020-02-10", "2021-02-20" ) ) 
+
+=======
+>>>>>>> bd5e1934851171313704a508ca7e3ce75263611f
 # print( getBasic( 'BTC'))
 # print( getUrl( 'BTC'))
 #print( json.dumps( getSparkline( 'BTC', "2021-02-10", "2021-02-20" ), indent=2 ) )
