@@ -8,24 +8,21 @@ mykey = os.getenv( 'NOMICS_API_KEY' )
 
 # input: ticker symbol in string
 # output: a list consisting timestamp and price of the crypto
-def currentPrice( id ):
+def getBasic( id ):
 	reqUrl = "https://api.nomics.com/v1/currencies/ticker?"
 	key = "key=" + mykey
 	ids = "&ids=" + id
-#	interval = "&interval=1d"
-#	perPage = "&per-page=100"
-#	page = "&page=1"
+	interval = "&interval=1d"
 	
-	response = requests.get( reqUrl + key + ids )
+	response = requests.get( reqUrl + key + ids + interval )
 
 	if( response.status_code != 200 ):
 		return None
 	else:
-#		formattedRes = json.dumps( response.json(), indent=2 )
-
 		data = response.json()[0]
 
-		return [ data['price'], data['price_timestamp'], data['logo_url'] ]
+		imgUrl =  "https://cryptoicons.org/api/icon/" +  id.lower() + "/400"
+		return [ data['name'], data['rank'], data['price'], data['price_timestamp'], data['1d']['price_change_pct'], imgUrl ]
 
 
 
@@ -42,7 +39,7 @@ def getUrl( id ):
 		return None
 	else:
 		data = res.json()[0]
-		return data['website_url']
+		return [ data['description'], data['website_url' ] ]
 
 
 
@@ -75,9 +72,9 @@ def saveImg( url, filename ):
 	f.close()
 
 
+print( getBasic( 'BTC' ) )
+print( getUrl( 'BTC' ) )
 #print( json.dumps( getSparkline( 'BTC', "2021-02-10", "2021-02-20" ), indent=2 ) )
 #saveImg( "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc", "1.svg"  )
-
-
 
 
