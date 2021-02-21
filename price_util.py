@@ -48,19 +48,19 @@ def getUrl(id):
 # input: ticker symbol in string
 # output:
 def getSparkline(id, s, e):
-	reqUrl = "https://api.nomics.com/v1/currencies/sparkline?"
-	key = "key=" + mykey
-	ids = "&ids=" + id
-	start = "&start=" + s + "T00%3A00%3A00Z"
-	end = "&end=" + e + "T00%3A00%3A00Z"
+    reqUrl = "https://api.nomics.com/v1/currencies/sparkline?"
+    key = "key=" + mykey
+    ids = "&ids=" + id
+    start = "&start=" + s + "T00%3A00%3A00Z"
+    end = "&end=" + e + "T00%3A00%3A00Z"
 
-	res = requests.get(reqUrl + key + ids + start + end)
+    res = requests.get(reqUrl + key + ids + start + end)
 
-	if(res.status_code != 200):
-		return None
-	else:
-		data = res.json()[0]
-		return [data['timestamps'], data['prices']]
+    if res.status_code != 200:
+        return None
+    else:
+        data = (res.json())[0]
+        return [data['timestamps'], data['prices']]
 
 
 # input: image url, image file name
@@ -73,21 +73,20 @@ def saveImg(url, filename):
     f.close()
 
 
+def visualize(data):
+    for i in range(len(data[0])):
+        data[0][i] = datetime.strptime(data[0][i], '%Y-%m-%dT%H:%M:%SZ')
 
-def visualize( data ):
-	for i in range( len( data[0] ) ):
-		data[0][i] = datetime.strptime( data[0][i], '%Y-%m-%dT%H:%M:%SZ' )
+    for i in range(len(data[1])):
+        data[1][i] = float(data[1][i])
 
-	for i in range( len( data[1] ) ):
-		data[1][i] = float( data[1][i] )
+    plt.figure(figsize=(10, 10), dpi=300)
+    plt.plot_date(data[0], data[1], linestyle='solid', marker='o')
+    plt.xlabel('Time', fontweight='bold')
+    plt.ylabel('Price', fontweight='bold')
+    plt.savefig('sparkline.png')
 
-	plt.figure( figsize = ( 10, 10 ), dpi = 300 )
-	plt.plot_date( data[0], data[1], linestyle='solid', marker='o' )
-	plt.xlabel( 'Time', fontweight='bold' )
-	plt.ylabel( 'Price', fontweight='bold' )
-	plt.savefig( 'sparkline.png' )
-
-# visualize( getSparkline( 'BTC', "2020-02-10", "2021-02-20" ) ) 
+visualize( getSparkline( 'BTC', "2020-02-10", "2021-02-21" ) )
 
 # print( getBasic( 'BTC'))
 # print( getUrl( 'BTC'))

@@ -13,6 +13,7 @@ thirdEmbed = None
 secondEmbed = None
 tmpMsg = None
 
+
 @client.event
 async def on_ready():
     print('Logged in as {0.user}'.format(client))
@@ -35,7 +36,7 @@ async def on_message(msg):
             [name, rank, price, timestamp, price_change_pct,
                 price_change, high, logo_url] = pu.getBasic(msgArr[1])
             [desp, coinUrl] = pu.getUrl(msgArr[1])
-            if len(desp) >2048:
+            if len(desp) > 2048:
                 desp = desp[:2047]
 
             if len(desp) >= 400:
@@ -49,8 +50,8 @@ async def on_message(msg):
                                   description=showDesp, color=discord.Color.blue())
             embed.add_field(name="Current Price",
                             value=str(round(float(price), sigfigs=7))+" USD", inline=True)
-            embed.add_field(name="Timestamp", value=util.convertTimestamp(
-                timestamp), inline=True)
+            newTimestamp = util.convertTimestamp(timestamp)
+            embed.add_field(name="Timestamp", value=newTimestamp, inline=True)
             embed.add_field(name="Price Change in 1 Day", value=str(
                 round(float(price_change), sigfigs=7)), inline=False)
             embed.add_field(name=f"Price Change % in 1 Day", value=str(
@@ -66,7 +67,7 @@ async def on_message(msg):
 
             embed.set_footer(
                 text=leftString+"Go Right for Sparkline\U000027A1")
-            
+
             await msg.add_reaction('\U0001F4B0')
             await chanMsg.edit(embed=embed)
             await chanMsg.add_reaction('\U00002B05')
@@ -77,11 +78,14 @@ async def on_message(msg):
             secondEmbed = embed
             global firstEmbed
             firstEmbed = discord.Embed(title=msgArr[1]+" ("+name+")", url=coinUrl,
-                                  description=desp, color=discord.Color.gold())
+                                       description=desp, color=discord.Color.gold())
             global thirdEmbed
-            thirdEmbed = discord.Embed(title="Visual", color=discord.Color.purple())
-            
-            
+            [today, oldday] = util.thirtyDayInterval(timestamp)
+            # print([today, oldday])
+            pu.visualize(pu.getSparkline(msgArr[1], oldday, today))
+            thirdEmbed = discord.Embed(
+                title="Visual", color=discord.Color.purple())
+
         else:
             await channel.send('Please at least enter one crypto currency')
     await bot.process_commands(msg)
@@ -94,12 +98,12 @@ async def on_reaction_add(reaction, user):
         return
     if reaction.emoji == '\U00002B05':
         # from second to first
-        if reaction.message.embeds[0].colour==discord.Color.blue():
+        if reaction.message.embeds[0].colour == discord.Color.blue():
             await reaction.message.edit(embed=firstEmbed)
             await reaction.remove(user)
             return
         # from third to second
-        if reaction.message.embeds[0].colour==discord.Color.purple():
+        if reaction.message.embeds[0].colour == discord.Color.purple():
             await reaction.message.edit(embed=secondEmbed)
             await tmpMsg.delete()
             await reaction.remove(user)
@@ -108,20 +112,18 @@ async def on_reaction_add(reaction, user):
 
     elif reaction.emoji == '\U000027A1':
         # from second to third
-        if reaction.message.embeds[0].colour==discord.Color.blue():
+        if reaction.message.embeds[0].colour == discord.Color.blue():
             await reaction.message.edit(embed=thirdEmbed)
-            tmpMsg = await reaction.message.channel.send(file=discord.File('logo.png'))
+            tmpMsg = await reaction.message.channel.send(file=discord.File('sparkline.png'))
             await reaction.remove(user)
             return
 
         # from first to second
-        if reaction.message.embeds[0].colour==discord.Color.gold():
+        if reaction.message.embeds[0].colour == discord.Color.gold():
             await reaction.message.edit(embed=secondEmbed)
             await reaction.remove(user)
             return
         await reaction.remove(user)
-
-
 
 
 client.run(os.getenv('DISCORD_TOKEN'))
