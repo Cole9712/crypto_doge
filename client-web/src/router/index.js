@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+const linkActiveClass = 'my-link-active-class'
 
 Vue.use(VueRouter)
+
+Vue.material.router.linkActiveClass = linkActiveClass
 
 const routes = [
   {
@@ -21,7 +24,9 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  linkActiveClass
 })
+
 
 export default router
