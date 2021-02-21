@@ -34,7 +34,7 @@ This is a project for StormHacks 2021 by Hao Wu & Ross Shen
 
 ## Deployment Technology
 
-[Google Cloud](https://cloud.google.com)
+[Google Cloud](https://cloud.google.com) with Compute Engine
 
 ## API Used
 
