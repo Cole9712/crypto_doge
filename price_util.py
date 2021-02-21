@@ -19,7 +19,7 @@ def currentPrice( id ):
 	response = requests.get( reqUrl + key + ids )
 
 	if( response.status_code != 200 ):
-		return null
+		return None
 	else:
 #		formattedRes = json.dumps( response.json(), indent=2 )
 
@@ -39,7 +39,7 @@ def getUrl( id ):
 	res = requests.get( reqUrl + key + ids )
 
 	if( res.status_code != 200 ):
-		return null
+		return None
 	else:
 		data = res.json()[0]
 		return data['website_url']
