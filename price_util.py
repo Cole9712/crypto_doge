@@ -44,11 +44,6 @@ def getUrl( id ):
 		data = res.json()[0]
 		return data['website_url']
 
-<<<<<<< HEAD
-=======
-# print( currentPrice( 'BTC' ) )
-
->>>>>>> 1b23a118b8e958c46d86888053277b00ba76e33d
 
 
 # input: ticker symbol in string
