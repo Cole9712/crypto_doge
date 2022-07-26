@@ -1,7 +1,7 @@
 # Crypto Doge <img src="./doge-deal-with-it.png" alt="doge" width="60"/>
-###This is a discord bot that can get real-time cryptocurrency information
+### This is a discord bot that can get real-time cryptocurrency information
 
-##Description
+## Description
 
 This is a project for StormHacks 2021 by Hao Wu & Ross Shen. 
 This discord bot that allows users to interact and get real time cryptocurrency information with simple commands.
@@ -34,7 +34,7 @@ This discord bot that allows users to interact and get real time cryptocurrency 
         -   Full detailed description of the cryptocurrency if from the home page
 -   More coming soon...
 
-##Deployments
+## Deployments
 
 [Google Cloud](https://cloud.google.com) with Compute Engine
 
