@@ -140,3 +140,6 @@ sparkline.png
 node_modules/
 *.swp
 *.json
+
+# mac files
+.DS_Store
